@@ -126,7 +126,7 @@ view: userrequests {
     sql: ${TABLE}.status ;;
     html:
     {% if status._value == 'open' and time_from_creation_dt._value > 48 %}
-        <p style="font-weight: bold;background-color: red; font-size:100%; text-align:center">{{ rendered_value }}</p>
+        <p style="font-weight: bold;color: red; font-size:100%; text-align:center">{{ rendered_value }}</p>
     {% else  %}
         <p style="font-weight: bold; font-size:100%; text-align:center">{{ rendered_value }}</p>
     {% endif %};;
