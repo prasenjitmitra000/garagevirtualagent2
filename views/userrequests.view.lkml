@@ -108,6 +108,12 @@ view: userrequests {
     sql: ${TABLE}.request_date ;;
   }
 
+  dimension: request_date_format {
+    type: string
+    label: "Request Date"
+    sql: format_date('%d-%b-%y',${TABLE}.request_date);;
+  }
+
   dimension: request_id {
     type: string
     label: "Request ID"
@@ -119,7 +125,7 @@ view: userrequests {
     label: "Status"
     sql: ${TABLE}.status ;;
     html:
-    {% if time_from_creation_dt._value > 48 %}
+    {% if status._value == 'open' and time_from_creation_dt._value > 48 %}
         <p style="font-weight: bold;background-color: red; font-size:100%; text-align:center">{{ rendered_value }}</p>
     {% else  %}
         <p style="font-weight: bold; font-size:100%; text-align:center">{{ rendered_value }}</p>
