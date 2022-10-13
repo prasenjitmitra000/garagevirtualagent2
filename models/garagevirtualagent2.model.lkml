@@ -1,4 +1,4 @@
-connection: "looker_one_demo"
+connection: "garagevirtualagent"
 
 # include all the views
 include: "/views/**/*.view"

@@ -4,13 +4,13 @@ view: userrequests {
 
   dimension: created_by {
     type: string
-    description: "Created By"
+    label: "Created By"
     sql: ${TABLE}.created_by ;;
   }
 
   dimension_group: creation {
     type: time
-    description: "Creation Date"
+    label: "Creation Date"
     timeframes: [
       raw,
       time,
@@ -25,43 +25,43 @@ view: userrequests {
 
   dimension: credits_estimated {
     type: string
-    description: "Credits Estimated (USD)"
+    label: "Credits Estimated (USD)"
     sql: ${TABLE}.credits_estimated ;;
   }
 
   dimension: description {
     type: string
-    description: "Description"
+    label: "Description"
     sql: ${TABLE}.description ;;
   }
 
   dimension: email_id {
     type: string
-    description: "Email ID"
+    label: "Email ID"
     sql: ${TABLE}.email_id ;;
   }
 
   dimension: employee_id {
     type: number
-    description: "Employee ID"
+    label: "Employee ID"
     sql: ${TABLE}.employee_id ;;
   }
 
   dimension: gcp_project_name {
     type: string
-    description: "GCP Project Name"
+    label: "GCP Project Name"
     sql: ${TABLE}.gcp_project_name ;;
   }
 
   dimension: gcp_services {
     type: string
-    description: "GCP Services"
+    label: "GCP Services"
     sql: ${TABLE}.gcp_services ;;
   }
 
   dimension_group: last_modified {
     type: time
-    description: "Last Modified Date"
+    label: "Last Modified Date"
     timeframes: [
       raw,
       time,
@@ -76,25 +76,25 @@ view: userrequests {
 
   dimension: last_modified_user {
     type: string
-    description: "Last Modified User"
+    label: "Last Modified User"
     sql: ${TABLE}.last_modified_user ;;
   }
 
   dimension: potential_revenue {
     type: string
-    description: "Potential Revenue (USD)"
+    label: "Potential Revenue (USD)"
     sql: ${TABLE}.potential_revenue ;;
   }
 
   dimension: remarks {
     type: string
-    description: "Remarks"
+    label: "Remarks"
     sql: ${TABLE}.remarks ;;
   }
 
   dimension_group: request {
     type: time
-    description: "Request Date"
+    label: "Request Date"
     timeframes: [
       raw,
       date,
@@ -110,32 +110,44 @@ view: userrequests {
 
   dimension: request_id {
     type: string
-    description: "Request ID"
+    label: "Request ID"
     sql: ${TABLE}.request_id ;;
   }
 
   dimension: status {
     type: string
-    description: "Status of the request"
+    label: "Status"
     sql: ${TABLE}.status ;;
+    html:
+    {% if time_from_creation_dt._value > 48 %}
+        <p style="font-weight: bold;background-color: red; font-size:100%; text-align:center">{{ rendered_value }}</p>
+    {% else  %}
+        <p style="font-weight: bold; font-size:100%; text-align:center">{{ rendered_value }}</p>
+    {% endif %};;
+
   }
 
   dimension: tag_id {
     type: string
-    description: "Tag ID"
+    label: "Request Name"
     sql: ${TABLE}.tag_id ;;
   }
 
   dimension: targeted_audiences {
     type: string
-    description: "Targeted Audiences"
+    label: "Targeted Audiences"
     sql: ${TABLE}.targeted_audiences ;;
   }
 
   dimension: usecase_name {
     type: string
-    description: "Use Case Name"
+    label: "Use Case Name"
     sql: ${TABLE}.usecase_name ;;
+  }
+
+  dimension: time_from_creation_dt {
+    type: number
+    sql: TIMESTAMP_DIFF( CURRENT_TIMESTAMP() ,  TIMESTAMP(${TABLE}.creation_date), HOUR) ;;
   }
 
   measure: count {
